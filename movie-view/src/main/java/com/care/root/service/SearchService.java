@@ -1,6 +1,8 @@
 package com.care.root.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,13 @@ public class SearchService implements movieURL{
 		boolean bool = bookingChk(dto.getMovieId(),dto.getBookCount());
 		String message;
 		if(bool) {
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat format = 
+					new SimpleDateFormat("yyyy/MM/dd-HH시mm분"); 
+			dto.setBookDate(format.format(cal.getTime()) );
+			int re = movieSearch.postForObject(
+					movieBookUrl+"save/", dto, Integer.class);
+			System.out.println("결과(1성공, 0실패) : "+re);
 			message = "<script>alert('성공')</script>";
 		}else {
 			message =

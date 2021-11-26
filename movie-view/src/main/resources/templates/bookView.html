@@ -3,10 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+function psCheck(){
+    phNum = $("#ps").val()
+    bookSearch = "http://localhost:10002/book/booksearch/"
+    $.ajax({
+        url:bookSearch+phNum, type:"GET", dataType:"json",
+        success: function(book){
+            let html = "<h3>검색 결과</h3>"
+            html += "<b>이름 : </b>"+book.bookName +"<br>"
+            html += "<b>제목 : </b>"+book.movieTitle +"<hr width='300px'>"
+            html += "<a href='' onclick='history.back()'>이전</a>"
+            $("#wrap").html(html)
+        },error:function(){ alert('문제 발생') }
+    });
+}
+</script>
+
 </head>
 <body>
 	<header th:include="default/header"></header>
-	<div class="wrap" align="center">
+	<div class="wrap" id="wrap" align="center">
 		<h3>[[${movieId}]] : [[${movieTitle}]] / [[${movieDate}]]</h3>
 		<hr width="300px">
 		<form th:action="@{/booking}" method="post">
@@ -27,8 +44,11 @@
 					<td><input type="text" name="bookCount"></td>
 				</tr>
 				<tr>
-					<td colspan="2" align="right"><input type="submit"
-						value="예매확정"></td>
+					<td colspan="2" align="right">
+						<input type="text" id="ps" placeholder="전화번호로 검색"> 
+						<input type="button" onclick="psCheck()" value="검색"> 
+						<input type="button" th:attr="onclick=|psCheck()|" th:value="검색"> 
+						<input type="submit" value="예매확정"></td>
 				</tr>
 			</table>
 		</form>

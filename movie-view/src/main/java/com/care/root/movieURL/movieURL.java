@@ -5,4 +5,6 @@ public interface movieURL {
 			"http://localhost:10001/search/";
 	public static final String movieUrl = 
 			"http://localhost:10000/home/";
+	public static final String movieBookUrl = 
+			"http://localhost:10002/book/";
 }
